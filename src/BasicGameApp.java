@@ -12,12 +12,19 @@
 //import java.awt.Canvas;
 
 //Graphics Libraries
+import org.w3c.dom.html.HTMLDOMImplementation;
+
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import java.util.ArrayList;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.JPanel;
+
 
 
 //*******************************************************************************
@@ -38,10 +45,15 @@ public class BasicGameApp implements Runnable {
 
    //Declare the variables needed for the graphics
 	public JFrame frame;
+
 	public Canvas canvas;
-   public JPanel panel;
-   
+    public JPanel panel;
+    KeyEvent event;
+
+
+
 	public BufferStrategy bufferStrategy;
+
 	public Image astroPic;
 	public Image rockyPic;
 
@@ -78,8 +90,9 @@ public class BasicGameApp implements Runnable {
    // Initialize your variables and construct your program objects here.
 	public BasicGameApp() {
 		//x = 11;
-      setUpGraphics();
-       
+
+
+	//	addKeyListener(this);
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
@@ -94,7 +107,9 @@ public class BasicGameApp implements Runnable {
 
 		//astro = new Astronaut(950,100);
 		grace = new Astronaut((int)(Math.random()*940), (int)(Math.random()*640));
+		grace.name = "grace";
 		rocky = new Astronaut((int)(Math.random()*940), (int)(Math.random()*640));
+		rocky.name = "rocky";
 		for(int i = 0; i < numAstrophage; i++){
 			astrophage = new Astrophage();
 			astrophage.dx = (int)(Math.random()*10)+1;
@@ -108,7 +123,7 @@ public class BasicGameApp implements Runnable {
 //		jack.dy = 1;
 //		jack.dx = 0;
 
-
+		setUpGraphics();
 	}// BasicGameApp()
 
    
@@ -133,9 +148,12 @@ public class BasicGameApp implements Runnable {
 
 	public void moveThings()
 	{
+
       //calls the move( ) code in the objects
 		//astro.wrap();
 		//grace.bounce();
+		//keyPressed();
+		//keyPressed(KeyEvent);
 		graceXRockyCrashing();
 		astrophageXScientistCrashing();
 		astrophageXTaumeba();
@@ -191,12 +209,14 @@ public class BasicGameApp implements Runnable {
 				if (astrophages.get(i).rec.intersects(rocky.rec) || astrophages.get(i).rec.intersects(grace.rec)){// && astrophages.get(i).isCrashingScientist == false) {
 				//	System.out.println("CRASH");
 					astrophages.get(i).isAlive = false;
+					astrophages.get(i).dx = 0;
+					astrophages.get(i).dy = 0;
 					//count--;
 					if(astrophages.get(i).rec.intersects(rocky.rec)){
-						rocky.fuel= rocky.fuel+15;
+						rocky.fuel= rocky.fuel+30;
 					}
 					if(astrophages.get(i).rec.intersects(grace.rec)){
-						grace.fuel= grace.fuel+15;
+						grace.fuel= grace.fuel+30;
 					}
 				} else {
 					if (astrophages.get(i).duplicate) {
@@ -229,26 +249,28 @@ public class BasicGameApp implements Runnable {
 
    //Graphics setup method
    private void setUpGraphics() {
-      frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
-   
+	//	event = new KeyEvent();
+      frame = new JFrame("Application Template");   //Create the program window or frame.  Names it
+		frame.add(grace);
       panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
       panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
       panel.setLayout(null);   //set the layout
-   
+   //frame.add(listen);
       // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
       // and trap input events (Mouse and Keyboard events)
       canvas = new Canvas();  
-      canvas.setBounds(0, 0, WIDTH, HEIGHT);
+     // panel.add(grace);
+	  canvas.setBounds(0, 0, WIDTH, HEIGHT);
       canvas.setIgnoreRepaint(true);
    
-      panel.add(canvas);  // adds the canvas to the panel.
-   
+      panel.add(canvas);  // adds the canvas to the panel
+
       // frame operations
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
       frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
       frame.setResizable(false);   //makes it so the frame cannot be resized
       frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
-      
+      //frame.add(grace);
       // sets up things so the screen displays images nicely.
       canvas.createBufferStrategy(2);
       bufferStrategy = canvas.getBufferStrategy();
@@ -265,7 +287,7 @@ public class BasicGameApp implements Runnable {
 			   count++;
 		   }
 	   }
-	   System.out.println(count);
+//	   System.out.println(count);
 	   return count;
    }
 
@@ -278,26 +300,31 @@ public class BasicGameApp implements Runnable {
 		g.drawImage(starsBackground, 0, 0, 1000, 700, null);
 
 		//g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-		g.drawImage(astroPic, grace.xpos, grace.ypos, grace.width, grace.height, null);
-		g.drawImage(rockyPic, rocky.xpos, rocky.ypos, rocky.width, rocky.height, null);
 
-		for(Astrophage a: astrophages){
-			if(a.isAlive) {
-				g.drawImage(astrophagePic, a.xpos, a.ypos, a.width, a.height, null);
-			}
-		}
-		for(Taumeba t: taumebas)
-		{
-			if(t.isAlive){
-				g.drawImage(taumebaPic, t.xpos, t.ypos, t.width, t.height, null);
-			}
-		}
 		if(countAlive()<=0)
 		{
-			g.drawImage(winPic, 0, 0, WIDTH, HEIGHT, null);
+			g.drawImage(winPic, 149, 0, 702, HEIGHT, null);
 
 
+		}else{
+			System.out.println(countAlive());
+
+			g.drawImage(astroPic, grace.xpos, grace.ypos, grace.width, grace.height, null);
+			g.drawImage(rockyPic, rocky.xpos, rocky.ypos, rocky.width, rocky.height, null);
+
+			for(Astrophage a: astrophages){
+				if(a.isAlive) {
+					g.drawImage(astrophagePic, a.xpos, a.ypos, a.width, a.height, null);
+				}
+			}
+			for(Taumeba t: taumebas)
+			{
+				if(t.isAlive){
+					g.drawImage(taumebaPic, t.xpos, t.ypos, t.width, t.height, null);
+				}
+			}
 		}
+
 
 
 		//g.draw(new Rectangle(astro.xpos, astro.ypos, astro.width, astro.height));

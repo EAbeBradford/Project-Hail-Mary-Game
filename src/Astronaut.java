@@ -1,9 +1,13 @@
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.*;
 /**
  * Created by chales on 11/6/2017.
  */
-public class Astronaut {
+public class Astronaut extends JPanel implements ActionListener, KeyListener {
     public String name;                //holds the name of the hero
     public int xpos;                //the x position
     public int ypos;                //the y position
@@ -39,8 +43,47 @@ public class Astronaut {
         rec = new Rectangle(xpos, ypos, height, width);
         fuel = 1000;
 
-    } // constructor
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
 
+    } // constructor
+    public void keyTyped(KeyEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+        //String s = e.getActionCommand();
+        repaint();
+
+    }
+    public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+        if(name.equals("grace")) {
+            System.out.println("press");
+
+            if (code == KeyEvent.VK_DOWN) {
+                dy = -Math.abs(dy);
+            }
+            if (code == KeyEvent.VK_UP) {
+                dy = Math.abs(dy);
+
+            }
+            if (code == KeyEvent.VK_LEFT) {
+
+                dx = -Math.abs(dx);
+            }
+
+
+            if (code == KeyEvent.VK_RIGHT) {
+
+                dx = Math.abs(dx);
+
+            }
+            bounce();
+
+        }
+    }
+    public void keyReleased(KeyEvent e) {
+        bounce();
+    }
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
     public void move() {
         if(fuel>0) {

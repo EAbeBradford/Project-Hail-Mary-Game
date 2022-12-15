@@ -52,4 +52,6 @@ public class Taumeba {
         ypos = ypos + dy;
         rec = new Rectangle(xpos, ypos, height, width);
     }
+
+
 }
