@@ -17,6 +17,7 @@ public class Astronaut extends JPanel implements ActionListener, KeyListener {
     public int height;
     public boolean isAlive;            //a boolean to denote if the hero is alive or dead.
     public boolean isCrashingSciencist;
+    public int health;
 
     public int fuel;
     public Rectangle rec;
@@ -42,6 +43,7 @@ public class Astronaut extends JPanel implements ActionListener, KeyListener {
         isAlive = true;
         rec = new Rectangle(xpos, ypos, height, width);
         fuel = 1000;
+        health = 10;
 
         addKeyListener(this);
         setFocusable(true);

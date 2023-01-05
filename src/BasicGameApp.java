@@ -14,23 +14,26 @@
 //Graphics Libraries
 import org.w3c.dom.html.HTMLDOMImplementation;
 
+
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
 
 
 //*******************************************************************************
 // Class Definition Section
 
-public class BasicGameApp implements Runnable {
+public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
    //Variable Definition Section
    //Declare the variables used in the program 
@@ -262,7 +265,8 @@ public class BasicGameApp implements Runnable {
      // panel.add(grace);
 	  canvas.setBounds(0, 0, WIDTH, HEIGHT);
       canvas.setIgnoreRepaint(true);
-   
+	canvas.addKeyListener(this);
+	canvas.addMouseListener(this);
       panel.add(canvas);  // adds the canvas to the panel
 
       // frame operations
@@ -297,7 +301,7 @@ public class BasicGameApp implements Runnable {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-		g.drawImage(starsBackground, 0, 0, 1000, 700, null);
+		g.drawImage(starsBackground, 0, 0, WIDTH, HEIGHT, null);
 
 		//g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 
@@ -307,9 +311,11 @@ public class BasicGameApp implements Runnable {
 
 
 		}else{
-			System.out.println(countAlive());
+			//System.out.println(countAlive());
 
 			g.drawImage(astroPic, grace.xpos, grace.ypos, grace.width, grace.height, null);
+			g.setColor(Color.red);
+			g.fillRect(grace.xpos, grace.ypos-10, (grace.width)*(grace.health/10), 10);
 			g.drawImage(rockyPic, rocky.xpos, rocky.ypos, rocky.width, rocky.height, null);
 
 			for(Astrophage a: astrophages){
@@ -331,5 +337,94 @@ public class BasicGameApp implements Runnable {
 		g.dispose();
 
 		bufferStrategy.show();
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println(e.getKeyCode());
+		System.out.println(e.getKeyChar());
+
+		if(e.getKeyCode() == 38){
+			grace.dy = -Math.abs(grace.dy);
+
+		}
+
+		if(e.getKeyCode() == 39){
+			grace.dx = Math.abs(grace.dx);		
+		}
+		if(e.getKeyCode() == 40){
+			grace.dy = Math.abs(grace.dy);
+		}
+		if(e.getKeyCode() == 37){
+			grace.dx = -Math.abs(grace.dx);		
+
+		}
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e.getID());
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
