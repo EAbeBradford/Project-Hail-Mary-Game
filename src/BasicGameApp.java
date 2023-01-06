@@ -105,7 +105,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 		taumebaPic = Toolkit.getDefaultToolkit().getImage("taumeba.png");
 		winPic = Toolkit.getDefaultToolkit().getImage("win.jpg");
 
-		int numAstrophage = (int)(Math.random()*50)+10;
+		int numAstrophage = (int)(Math.random()*100)+10;
 		//count = numAstrophage;
 
 		//astro = new Astronaut(950,100);
@@ -314,8 +314,9 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 			//System.out.println(countAlive());
 
 			g.drawImage(astroPic, grace.xpos, grace.ypos, grace.width, grace.height, null);
-			g.setColor(Color.red);
-			g.fillRect(grace.xpos, grace.ypos-10, (grace.width)*(grace.health/10), 10);
+			//render a health bar
+			//g.setColor(Color.red);
+			//g.fillRect(grace.xpos, grace.ypos-10, (grace.width)*(grace.health/10), 10);
 			g.drawImage(rockyPic, rocky.xpos, rocky.ypos, rocky.width, rocky.height, null);
 
 			for(Astrophage a: astrophages){
@@ -350,22 +351,19 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		System.out.println(e.getKeyCode());
-		System.out.println(e.getKeyChar());
+		//System.out.println(e.getKeyChar());
 
-		if(e.getKeyCode() == 38){
-			grace.dy = -Math.abs(grace.dy);
-
+		if(e.getKeyCode() == 38){ //north
+			grace.north = true;
 		}
-
-		if(e.getKeyCode() == 39){
-			grace.dx = Math.abs(grace.dx);		
+		if(e.getKeyCode() == 39){//east
+			grace.east = true;
 		}
-		if(e.getKeyCode() == 40){
-			grace.dy = Math.abs(grace.dy);
+		if(e.getKeyCode() == 40){ //south
+			grace.south = true;
 		}
-		if(e.getKeyCode() == 37){
-			grace.dx = -Math.abs(grace.dx);		
-
+		if(e.getKeyCode() == 37){ //west
+			grace.west = true;	
 		}
 		// TODO Auto-generated method stub
 		
@@ -375,6 +373,19 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getKeyCode() == 38){ //north
+			grace.north = false;
+		}
+		if(e.getKeyCode() == 39){//east
+			grace.east = false;
+		}
+		if(e.getKeyCode() == 40){ //south
+			grace.south = false;
+		}
+		if(e.getKeyCode() == 37){ //west
+			grace.west = false;	
+
+		}
 		
 	}
 

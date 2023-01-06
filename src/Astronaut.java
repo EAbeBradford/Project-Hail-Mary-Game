@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Created by chales on 11/6/2017.
  */
-public class Astronaut extends JPanel implements ActionListener, KeyListener {
+public class Astronaut extends JPanel{
     public String name;                //holds the name of the hero
     public int xpos;                //the x position
     public int ypos;                //the y position
@@ -18,6 +18,11 @@ public class Astronaut extends JPanel implements ActionListener, KeyListener {
     public boolean isAlive;            //a boolean to denote if the hero is alive or dead.
     public boolean isCrashingSciencist;
     public int health;
+    public boolean east;
+    public boolean west;
+    public boolean north;
+    public boolean south;
+
 
     public int fuel;
     public Rectangle rec;
@@ -43,52 +48,59 @@ public class Astronaut extends JPanel implements ActionListener, KeyListener {
         isAlive = true;
         rec = new Rectangle(xpos, ypos, height, width);
         fuel = 1000;
-        health = 10;
+        health = 10;            
 
-        addKeyListener(this);
-        setFocusable(true);
-        setFocusTraversalKeysEnabled(false);
+      
 
     } // constructor
-    public void keyTyped(KeyEvent e) {}
-    public void actionPerformed(ActionEvent e) {
-        //String s = e.getActionCommand();
-        repaint();
-
-    }
-    public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode();
-        if(name.equals("grace")) {
-            System.out.println("press");
-
-            if (code == KeyEvent.VK_DOWN) {
-                dy = -Math.abs(dy);
-            }
-            if (code == KeyEvent.VK_UP) {
-                dy = Math.abs(dy);
-
-            }
-            if (code == KeyEvent.VK_LEFT) {
-
-                dx = -Math.abs(dx);
-            }
-
-
-            if (code == KeyEvent.VK_RIGHT) {
-
-                dx = Math.abs(dx);
-
-            }
-            bounce();
-
-        }
-    }
-    public void keyReleased(KeyEvent e) {
-        bounce();
-    }
+    
+   
+   
+   
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
     public void move() {
+        if(north)
+        {
+            dy = -3;
+            dx = 0;   
+        }
+        if(south)
+        {
+            dy = 3;
+            dx = 0;      
+        }
+        if(west)
+        {
+            dx = -3;
+            dy = 0;  
+        }
+        if(east)
+        {
+            dx = 3;
+            dy = 0;      
+        }
+        if(north && west)
+        {
+            dx = -3;
+            dy = -3;
+        }
+        if(north && east)
+        {
+            dx = 3;
+            dy = -3;
+        }
+        if(south && west)
+        {
+            dx = -3;
+            dy = 3;
+        }
+        if(south && east)
+        {
+            dx = 3;
+            dy = 3;
+        }
         if(fuel>0) {
+            
             xpos = xpos + dx;
             ypos = ypos + dy;
             rec = new Rectangle(xpos, ypos, height, width);
@@ -98,7 +110,48 @@ public class Astronaut extends JPanel implements ActionListener, KeyListener {
     }
 
     public void wrap(){
+        if(north)
+        {
+            dy = -3;
+            dx = 0;   
+        }
+        if(south)
+        {
+            dy = 3;
+            dx = 0;      
+        }
+        if(west)
+        {
+            dx = -3;
+            dy = 0;  
+        }
+        if(east)
+        {
+            dx = 3;
+            dy = 0;      
+        }
+        if(north && west)
+        {
+            dx = -3;
+            dy = -3;
+        }
+        if(north && east)
+        {
+            dx = 3;
+            dy = -3;
+        }
+        if(south && west)
+        {
+            dx = -3;
+            dy = 3;
+        }
+        if(south && east)
+        {
+            dx = 3;
+            dy = 3;
+        }
         if(fuel>0) {
+           
             if (xpos > 1000) {
                 xpos = 0;
             }
@@ -110,7 +163,49 @@ public class Astronaut extends JPanel implements ActionListener, KeyListener {
     }
 
     public void bounce(){
+        if(north)
+        {
+            dy = -3;
+            dx = 0;   
+        }
+        if(south)
+        {
+            dy = 3;
+            dx = 0;      
+        }
+        if(west)
+        {
+            dx = -3;
+            dy = 0;  
+        }
+        if(east)
+        {
+            dx = 3;
+            dy = 0;      
+        }
+        if(north && west)
+        {
+            dx = -3;
+            dy = -3;
+        }
+        if(north && east)
+        {
+            dx = 3;
+            dy = -3;
+        }
+        if(south && west)
+        {
+            dx = -3;
+            dy = 3;
+        }
+        if(south && east)
+        {
+            dx = 3;
+            dy = 3;
+        }
+
         if(fuel >0) {
+            
             if (xpos > 1000 - 50) {
                 dx = -dx;
             }
