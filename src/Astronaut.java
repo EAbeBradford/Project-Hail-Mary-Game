@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Created by chales on 11/6/2017.
  */
-public class Astronaut extends JPanel{
+public class Astronaut{
     public String name;                //holds the name of the hero
     public int xpos;                //the x position
     public int ypos;                //the y position
@@ -38,11 +38,24 @@ public class Astronaut extends JPanel{
 
     //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
     // if you put in a String, an int and an int the program will use this constructor instead of the one above.
-    public Astronaut(int pXpos, int pYpos) {
+    public Astronaut(int pXpos, int pYpos, int random) {
         xpos = pXpos;
         ypos = pYpos;
-        dx =3;
-        dy =3;
+        if(random ==0){
+            dx = 3;
+            dy = 3;
+        } else if (random==1){
+            dx = -3;
+            dy = 3;
+        }
+        else if (random==2){
+            dx = 3;
+            dy = -3;
+        } else{
+            dx = -3;
+            dy = -3;
+        }
+
         width = 50;
         height = 50;
         isAlive = true;
@@ -154,6 +167,10 @@ public class Astronaut extends JPanel{
            
             if (xpos > 1000) {
                 xpos = 0;
+            }
+            if(xpos<0)
+            {
+                xpos = 1000;
             }
             xpos = xpos + dx;
             ypos = ypos + dy;

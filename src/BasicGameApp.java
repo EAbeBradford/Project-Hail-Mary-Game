@@ -64,7 +64,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 	public Image starsBackground;
 	public Image taumebaPic;
 	public Image winPic;
-	public ArrayList<Astrophage> astrophages = new ArrayList<Astrophage>();
+	public ArrayList <Astrophage> astrophages = new ArrayList<Astrophage>();
 	public ArrayList<Taumeba> taumebas = new ArrayList<Taumeba>();
 
 
@@ -106,18 +106,21 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 		winPic = Toolkit.getDefaultToolkit().getImage("win.jpg");
 
 		int numAstrophage = (int)(Math.random()*100)+10;
+		//astrophages = new Astrophage[numAstrophage];
 		//count = numAstrophage;
 
 		//astro = new Astronaut(950,100);
-		grace = new Astronaut((int)(Math.random()*940), (int)(Math.random()*640));
+		grace = new Astronaut((int)(Math.random()*940), (int)(Math.random()*640), (int)(Math.random()*4));
 		grace.name = "grace";
-		rocky = new Astronaut((int)(Math.random()*940), (int)(Math.random()*640));
+		rocky = new Astronaut((int)(Math.random()*940), (int)(Math.random()*640), (int)(Math.random()*4));
 		rocky.name = "rocky";
 		for(int i = 0; i < numAstrophage; i++){
 			astrophage = new Astrophage();
 			astrophage.dx = (int)(Math.random()*10)+1;
+			astrophage.dx = astrophage.dx;
 			astrophage.xpos = (int)(Math.random()*940);
 			astrophage.ypos = (int)(Math.random()*640);
+			astrophage.dy = (int)(Math.random()*10)+1;
 			astrophages.add(astrophage);
 			//count++;
 		}
@@ -195,10 +198,11 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 	}
 
 	public void astrophageXTaumeba(){
-		for(Taumeba t: taumebas){
-			for(Astrophage a: astrophages) {
-				if(a.rec.intersects(t.rec)){
-					a.isAlive = false;
+		for(int t = 0; t< taumebas.size(); t++){
+			for(int a  = 0; a<astrophages.size(); a++) {
+			//	for(int i = 0; i < astrophages.size(); i++){
+				if(astrophages.get(a).rec.intersects(taumebas.get(t).rec)){
+					astrophages.get(a).isAlive = false;
 					//count--;
 				}
 			}
@@ -209,8 +213,10 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 		for(int i = 0; i < astrophages.size(); i++){
 			if(astrophages.get(i).isAlive == true) {
 				astrophages.get(i).bounce();
+
+//					System.out.println(astrophages.get(i).xpos +" " +astrophages.get(i).dx);
 				if (astrophages.get(i).rec.intersects(rocky.rec) || astrophages.get(i).rec.intersects(grace.rec)){// && astrophages.get(i).isCrashingScientist == false) {
-				//	System.out.println("CRASH");
+//					System.out.println("CRASH");
 					astrophages.get(i).isAlive = false;
 					astrophages.get(i).dx = 0;
 					astrophages.get(i).dy = 0;
@@ -223,6 +229,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 					}
 				} else {
 					if (astrophages.get(i).duplicate) {
+
 						Astrophage newAstrophage = new Astrophage();
 						//newAstrophage.bounce();
 						astrophages.add(newAstrophage);
@@ -254,7 +261,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
    private void setUpGraphics() {
 	//	event = new KeyEvent();
       frame = new JFrame("Application Template");   //Create the program window or frame.  Names it
-		frame.add(grace);
+		//frame.add(grace);
       panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
       panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
       panel.setLayout(null);   //set the layout
@@ -285,6 +292,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
    public int countAlive()
    {
+	   int [] arr = {1, 2, 3};
+
+	   for(int utd5o76d: arr)
+	   {
+		//   System.out.println("arr[x] "+ utd5o76d);
+	   }
 	   int count = 0;
 	   for (Astrophage a: astrophages) {
 		   if(a.isAlive ==true){
@@ -436,6 +449,6 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(e);
 	}
 }

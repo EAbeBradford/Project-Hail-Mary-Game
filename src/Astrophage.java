@@ -22,9 +22,10 @@ public class Astrophage {
     {
         xpos = (int)(Math.random()*10)+980;
         ypos = (int)(Math.random()*650);
-        dx = -(int)(Math.random()*10+1);
-        dy = (int)(Math.random()*10);
-        //System.out.println(dx+", "+dy);
+        dx = (int)(Math.random()*10) +1;
+        dy = (int)(Math.random()*10)+1;
+        dx = -dx;
+        System.out.println(dx+", "+dy);
         width = 20;
         height = 20;
         isAlive = true;
@@ -43,22 +44,25 @@ public class Astrophage {
     }
 
     public void bounce(){
-        if(xpos>1000){
-            dx = -dx;
+        if(xpos>=1000){
+            dx = -Math.abs(dx);
             duplicate = true;
         }
         else{
             duplicate = false;
         }
-        if(xpos < 0){
+        if(xpos <= 0){
             dx = -dx;
+           // System.out.println(dx);
+
         }
-        if(ypos>700){
+        if(ypos>=700){
             dy = -dy;
         }
-        if(ypos < 0){
+        if(ypos <= 0){
             dy = -dy;
         }
+      //  System.out.println(xpos+ " " +dx);
         //duplicate = false;
         xpos = xpos + dx;
         ypos = ypos + dy;

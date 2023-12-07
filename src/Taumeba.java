@@ -26,8 +26,8 @@ public class Taumeba {
     public Taumeba(int pXpos, int pYpos) {
         xpos = pXpos;
         ypos = pYpos;
-        dx =7;
-        dy =7;
+        dx =(int)(Math.random()*10) +1;
+        dy =(int)(Math.random()*10) +1;
         width = 10;
         height = 10;
         isAlive = true;
@@ -36,16 +36,16 @@ public class Taumeba {
     }
     public void bounce(){
         if(xpos>1000) {
-            dx = -dx;
+            dx = -(int)(Math.random()*10) +1;
         }
         if(xpos < 0){
-            dx = -dx;
+            dx = (int)(Math.random()*10) +1;
         }
         if(ypos>700){
-            dy = -dy;
+            dy = -(int)(Math.random()*10) +1;
         }
         if(ypos < 0){
-            dy = -dy;
+            dy = (int)(Math.random()*10) +1;
         }
         //duplicate = false;
         xpos = xpos + dx;
